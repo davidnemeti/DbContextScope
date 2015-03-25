@@ -127,6 +127,7 @@ namespace Numero3.EntityFramework.Implementation
                     {
                         tran.Commit();
                         tran.Dispose();
+                        _transactions.Remove(dbContext);
                     }
                 }
                 catch (Exception e)
@@ -135,11 +136,10 @@ namespace Numero3.EntityFramework.Implementation
                 }
             }
 
-            _transactions.Clear();
-            _completed = true;
-
             if (lastError != null)
                 lastError.Throw(); // Re-throw while maintaining the exception's original stack track
+            else
+                _completed = true;
 
             return c;
         }
@@ -179,6 +179,7 @@ namespace Numero3.EntityFramework.Implementation
                     {
                         tran.Commit();
                         tran.Dispose();
+                        _transactions.Remove(dbContext);
                     }
                 }
                 catch (Exception e)
@@ -187,11 +188,10 @@ namespace Numero3.EntityFramework.Implementation
                 }
             }
 
-            _transactions.Clear();
-            _completed = true;
-
             if (lastError != null)
                 lastError.Throw(); // Re-throw while maintaining the exception's original stack track
+            else
+                _completed = true;
 
             return c;
         }
